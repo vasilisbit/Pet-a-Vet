@@ -1,0 +1,608 @@
+\documentclass[12pt,a4paper,twoside]{book}
+% Language setup for Greek and English
+\usepackage[english,greek]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1,LGR]{fontenc}
+% Font setup
+\usepackage{fontspec}
+\setmainfont{Linux Libertine O}[Scale=0.9]
+\setsansfont{Linux Biolinum}[Scale=0.9]
+\setmonofont{DejaVu Sans Mono}[Scale=0.9]
+% Other necessary packages
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{makeidx}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{hanging}
+\usepackage{adjustbox}
+\usepackage{amssymb}
+\usepackage{stackengine}
+\usepackage{ifthen}
+\usepackage{array}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{minted}
+\usepackage{listings}
+\usepackage{parskip}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{pdfpages}
+\usepackage{titlesec}
+% Page & text layout
+\usepackage{geometry}
+\geometry{
+   a4paper,
+   top=2.5cm,
+   bottom=2.5cm,
+   left=2.5cm,
+   right=2.5cm
+}
+% Headers & footers
+\usepackage{fancyhdr}
+\pagestyle{fancyplain}
+\fancyhf{} % Clear all header/footer fields
+
+% Define plain style for chapter pages and TOC
+\fancypagestyle{plain}{%
+    \fancyhf{} % Clear all header/footer fields
+    \renewcommand{\headrulewidth}{0pt} % Remove header rule
+    \renewcommand{\footrulewidth}{0pt} % Remove footer rule
+}
+
+% Define TOC style with specific headers
+\fancypagestyle{tocstyle}{%
+    \fancyhf{} % Clear all header/footer fields
+    \fancyhead[LE]{\thepage}
+    \fancyhead[CE]{\leftmark}
+    \fancyhead[CO]{\rightmark}
+    \fancyhead[RO]{\thepage}
+    \renewcommand{\headrulewidth}{0pt}
+}
+
+% Redefine \tableofcontents to use tocstyle
+\let\oldtableofcontents\tableofcontents
+\renewcommand{\tableofcontents}{%
+    \clearpage
+    % First page of TOC should be empty
+    \thispagestyle{empty}
+    \pagestyle{tocstyle}
+    \oldtableofcontents % chktex 1
+    \clearpage
+    \pagestyle{fancy}
+    % Regular pages header settings
+    \fancyhead[LE]{\thepage} % Left header on Even pages: Shows page number
+    \fancyhead[CE]{\leftmark} % Center header on Even pages: Shows chapter name (stored in \leftmark)
+    \fancyhead[RE]{ΚΕΦ. \thechapter} % Right header on Even pages: Shows "ΚΕΦ." followed by chapter number % chktex 12
+
+    \fancyhead[LO]{\thesection} % Left header on Odd pages: Shows current section number
+    \fancyhead[CO]{\rightmark} % Center header on Odd pages: Shows section name (stored in \rightmark)
+    \fancyhead[RO]{\thepage} % Right header on Odd pages: Shows page number
+
+    \renewcommand{\headrulewidth}{0.4pt} % Sets thickness of the horizontal line below the header
+
+    % Redefine chapter mark to remove "Chapter" prefix
+    \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+    % Redefine section mark to use section title only
+    \renewcommand{\sectionmark}[1]{\markright{#1}}
+}
+
+% Make table of contents use plain style
+\addtocontents{toc}{\protect\thispagestyle{plain}}
+
+% Hyperlinks
+\usepackage{hyperref}
+\usepackage{bookmark}                                       % Add this line to fix the hyperref warnings
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    filecolor=blue,
+    urlcolor=cyan,
+    unicode,
+    pdftitle={1ο Project Λειτουργικών Συστημάτων},
+    pdfsubject={Αναφορά Εργασίας},
+    pdfborderstyle={/S/U/W 1},                              % Underline links
+}
+\usepackage{tikz}
+\usetikzlibrary{positioning, shapes.geometric, arrows.meta}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{calc,arrows.meta,positioning}
+
+\definecolor{customRed}{HTML}{FF5F5A}                       % using hexadecimal
+\definecolor{customYellow}{HTML}{FFBE2E}                    % using hexadecimal
+\definecolor{customGreen}{HTML}{2ACA44}                     % using hexadecimal
+\definecolor{customPurple}{HTML}{C477DB}                    % using hexadecimal
+\definecolor{customBlue}{HTML}{052538}                      % using hexadecimal
+\definecolor{customLightBlue}{HTML}{60ADEC}                 % using hexadecimal
+\definecolor{customGray}{HTML}{A0A0A0}                      % using hexadecimal
+\definecolor{customBlack}{HTML}{000000}                     % using hexadecimal
+
+% Define a lighter gray for background and darker colors for text
+\definecolor{customBgGray}{HTML}{E0E0E0}         % Light gray background
+\definecolor{customCodeRed}{HTML}{C92A2A}        % Darker red
+\definecolor{customCodeYellow}{HTML}{E67700}     % Darker yellow/orange
+\definecolor{customCodeGreen}{HTML}{087F23}      % Darker green
+\definecolor{customCodePurple}{HTML}{7B1FA2}     % Darker purple
+\definecolor{customCodeBlue}{HTML}{1976D2}       % Darker blue
+\definecolor{customCodeBlack}{HTML}{1A1A1A}      % Lighter black
+
+\lstdefinestyle{myPythonStyle}{
+    language=Python,                                            % Set the language to Python
+    backgroundcolor=\color{customBgGray},                       % Background color
+    basicstyle=\color{customCodeBlack}\ttfamily\footnotesize,   % Basic font style, size, and color
+    keywordstyle=\color{customCodePurple}\bfseries,             % Style for general keywords
+    keywordstyle=[2]\color{customCodeYellow}\bfseries,          % Style for specific keywords
+    commentstyle=\color{customCodeGreen}\itshape,               % Style for comments
+    stringstyle=\color{customCodeGreen},                        % Style for strings
+    identifierstyle=\color{customCodeBlue},                     % Style for identifiers
+    morekeywords={self, None, True, False, format, abs,
+                as, pass, return, if, elif, else, for,
+                range, while, try, except, with, lambda,
+                yield, global, nonlocal, assert, del,
+                raise, in, is, and, or, not},                   % Additional keywords
+    morekeywords=[2]{os, graphviz, Digraph, collections,
+                    deque, math, tabulate},                     % Define 'import' and 'from' as additional keywords
+    % procnamekeys={def,class},                                 % Highlight function and class names
+    showstringspaces=false,                                     % Don't show spaces in strings
+%
+    breaklines=true,                                            % Automatically break long lines
+    breakatwhitespace=false,                                    % Break lines at any character
+    % prebreak=\textbackslash,                                  % Character for breaking lines
+    postbreak={\space},                                         % Character for breaking lines
+    breakautoindent=false,                                      % Indentation after line break
+    breakindent=0pt,                                            % Indentation before line break
+    resetmargins=true,                                          % Reset margins after line break
+    keepspaces=true,                                            % Keep spaces in the code
+    showspaces=false,                                           % Don't show spaces
+    columns=flexible,                                           % Column format
+%
+    numbers=left,                                               % Line numbers on the left
+    numberstyle=\small\color{customBgGray},                     % Style for line numbers
+    % numwidth=4em,                                             % Width allocated for line numbers
+    stepnumber=1,                                               % Step between line numbers
+    numbersep=8pt,                                              % Distance of line numbers from code
+    xleftmargin=1.5em,                                          % Match the numwidth
+    tabsize=4,                                                  % Size of a tab
+    captionpos=t,                                               % Position of the caption (t for top)
+    firstnumber=auto,                                           % Continue line numbering from previous listing
+    aboveskip=0em,                                              % Remove external spacing
+    belowskip=0em,                                              % Remove external spacing
+    frame=none,                                                 % Add top and bottom rules only
+    framerule=0pt,                                              % Make the rules invisible
+    rulecolor=\color{customBgGray},                             % Color of the frame (if enabled)
+    framesep=2pt,                                               % Add internal padding
+    % framexleftmargin=1em,                                     % Add internal left margin
+    % framexrightmargin=1em,                                    % Add internal right margin
+    escapeinside={\(*@}{@*\)},                                  % For escaping characters
+    morecomment=[l]{\#},                                        % Define comment style
+    morestring=[b]',                                            % Define string style with single quotes
+    morestring=[b]",                                            % Define string style with double quotes % chktex 18
+    literate={
+        {``}{{\textquotedbleft}}2
+        {''}{{\textquotedbright}}2
+        {`}{{\textquoteleft}}1
+        {'}{{\textquoteright}}1
+        {_}{{\_}}1
+    },
+}
+
+\lstdefinestyle{myCStyle}{
+    language=C,
+    backgroundcolor=\color{customBgGray},                       % Background color
+    basicstyle=\color{customCodeBlack}\ttfamily\footnotesize,   % Basic font style
+    keywordstyle=\color{customCodePurple}\bfseries,            % Style for keywords
+    keywordstyle=[2]\color{customCodeYellow}\bfseries,         % Style for additional keywords
+    commentstyle=\color{customCodeGreen}\itshape,              % Style for comments
+    stringstyle=\color{customCodeGreen},                       % Style for strings
+    identifierstyle=\color{customCodeBlue},                    % Style for identifiers
+    morekeywords={void, int, char, float, double, long, short, signed, unsigned,
+                  const, static, extern, volatile, register, auto, struct, union,
+                  typedef, enum, sizeof, break, continue, goto, return, if, else,
+                  switch, case, default, for, while, do, pid_t, sem_t},
+    morekeywords=[2]{stdio.h, stdlib.h, string.h, math.h, time.h, ctype.h,
+                     unistd.h, semaphore.h, sys/mman.h, sys/wait.h, fcntl.h,
+                     printf, fprintf, perror, exit, malloc, free, fork, waitpid,
+                     mmap, munmap, sem_init, sem_wait, sem_post, sem_destroy,
+                     sleep, rand, srand, atoi, time, MAP_SHARED, MAP_ANONYMOUS,
+                     PROT_READ, PROT_WRITE, MAP_FAILED, EXIT_SUCCESS, EXIT_FAILURE},
+    showstringspaces=false,
+    frame=none,
+    rulecolor=\color{customBgGray},
+    breaklines=true,                % Break long lines
+    breakatwhitespace=false,        % Break at any character
+    postbreak={\space},             % Character after break
+    breakautoindent=false,          % No indentation after break
+    breakindent=0pt,                % No indent before break
+    resetmargins=true,              % Reset margins after break
+    keepspaces=true,                % Preserve spaces
+    showspaces=false,               % Don't show spaces
+    columns=flexible,               % Column format
+    numbers=left,
+    numberstyle=\small\color{customBgGray},
+    stepnumber=1,
+    numbersep=8pt,
+    xleftmargin=1.5em,
+    tabsize=4,
+    captionpos=t,
+    firstnumber=auto,
+    aboveskip=0em,
+    belowskip=0em,
+    framesep=2pt,
+    escapeinside={\(*@}{@*\)},
+    morecomment=[l]{//},
+    morecomment=[s]{/*}{*/},
+    morestring=[b]", % chktex 18
+    morestring=[b]',
+    literate={
+        {``}{{\textquotedbleft}}2
+        {''}{{\textquotedbright}}2
+        {`}{{\textquoteleft}}1
+        {'}{{\textquoteright}}1
+        {_}{{\_}}1
+    },
+}
+
+\lstdefinestyle{myBashStyle}{
+    language=bash,
+    backgroundcolor=\color{customBgGray},                       % Background color
+    basicstyle=\color{customCodeBlack}\ttfamily\footnotesize,   % Basic font style
+    keywordstyle=\color{customCodePurple}\bfseries,            % Style for keywords
+    keywordstyle=[2]\color{customCodeYellow}\bfseries,         % Style for additional keywords
+    commentstyle=\color{customCodeGreen}\itshape,              % Style for comments
+    stringstyle=\color{customCodeGreen},                       % Style for strings
+    identifierstyle=\color{customCodeBlue},                    % Style for identifiers
+    alsoletter={0123456789}                                    % Define numbers as letters
+    morekeywords={if, then, else, elif, fi, for, while, do, done, in, case, esac, 
+                  function, select, until, break, continue, return, exit, shift,
+                  declare, local, readonly, export, set, unset},
+    morekeywords=[2]{echo, read, cat, awk, grep, sed, cut, tr, sort, uniq, wc,
+                     mkdir, rm, cp, mv, ls, cd, pwd, touch, chmod, chown, find,
+                     test, source, alias, eval, exec, getopts, printf, wait,
+                     STDIN, STDOUT, STDERR, IFS, PATH, BEGIN, END, NR, NF, 
+                     tolower, concat, print},
+    showstringspaces=false,
+    frame=none,
+    rulecolor=\color{customBgGray},
+    breaklines=true,                % Break long lines
+    breakatwhitespace=false,        % Break at any character
+    postbreak={\space},             % Character after break
+    breakautoindent=false,          % No indentation after break
+    breakindent=0pt,                % No indent before break
+    resetmargins=true,              % Reset margins after break
+    keepspaces=true,                % Preserve spaces
+    showspaces=false,               % Don't show spaces
+    columns=flexible,               % Column format
+    numbers=left,
+    numberstyle=\small\color{customBgGray},
+    stepnumber=1,
+    numbersep=8pt,
+    xleftmargin=1.5em,
+    tabsize=4,
+    captionpos=t,
+    firstnumber=auto,
+    aboveskip=0em,
+    belowskip=0em,
+    framesep=2pt,
+    escapeinside={\(*@}{@*\)},
+    morecomment=[l]{\#},
+    morestring=[b]", % chktex 18
+    morestring=[b]',
+    literate={
+        {``}{{\textquotedbleft}}2
+        {''}{{\textquotedbright}}2
+        {`}{{\textquoteleft}}1
+        {'}{{\textquoteright}}1
+        {_}{{\_}}1
+    },
+}
+
+\tcbset{
+    myCustomStyle/.style={
+        enhanced,                       % Enable enhanced features
+        breakable,                      % Allow the box to break across pages
+        colback=customBlue,             % Background color
+        colframe=customBgGray,              % Frame color
+        listing only,                   % Use listings
+%
+        fonttitle=\bfseries,            % Title font style
+        % frame=single,                 % Frame type
+        % interior titled,              % Use regular titled interior
+        interior style={
+            top color=black!75,         % Title area background
+            bottom color=black!75,      % Title area background
+        },
+        colbacktitle=black!75,          % Title background color
+        coltitle=white,                 % Title color
+        rounded corners,                % Rounded corners
+        boxrule=1mm,                    % Frame thickness
+        drop shadow southeast,          % Shadow effect
+        lefttitle=0pt,                  % Remove left margin of title
+        % left=1em,                     % Increase left margin for line numbers
+        title={\hspace*{-1em}\textcolor{customRed}{● }\textcolor{customYellow}{● }\textcolor{customGreen}{●}\quad#1}, % Circles + Title
+        attach title to upper={\vspace{2.3mm}}, % Adjust vertical spacing
+%
+        beforeafter skip=8pt,           % Space before and after the box
+        breaklines=true,                % Allow the box to break across pages
+        breakatwhitespace=false,        % Break lines at any character if necessary
+        % sharp corners                 % Sharp corners for the title area
+    }
+}
+
+% Custom commands for language switching
+\newcommand{\en}[1]{\foreignlanguage{english}{#1}}
+\newcommand{\gr}[1]{\foreignlanguage{greek}{#1}}
+% Custom command for coloring
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+% Index
+\makeindex
+% Set headheight to avoid fancyhdr warnings
+\setlength{\headheight}{14.5pt}
+
+% Adjust chapter spacing
+\titleformat{\chapter}[display]
+{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{15pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{-10pt}{20pt}
+
+% Adjust section spacing
+\titlespacing*{\section}{0pt}{10pt}{10pt}
+
+% Adjust vertical space between paragraphs
+\setlength{\parskip}{0.5em}
+
+% Make figure placement less strict
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\textfraction}{0.15}
+\renewcommand{\floatpagefraction}{0.7}
+
+\begin{document}
+% Start Arabic numbering from the beginning but hide numbers
+\pagenumbering{arabic}
+% Add this command to prevent blank pages
+\let\cleardoublepage\clearpage
+
+% Set main language to Greek
+\selectlanguage{greek}
+
+% Title page with hidden number
+\begin{titlepage}
+    \vspace*{8cm}
+    \begin{center}
+        {\LARGE \textbf{\textit{Pet-à-Vet}}}\\ % chktex 8
+        \vspace*{0.5cm}
+        {\large Use Cases}\\
+        {\large Τεχνολογία Λογισμικού}
+        \vspace*{5cm}
+        \\
+        \vspace*{1cm}
+        \begin{tabular}{l l l}
+            % \large Βασίλειος Μπίτζας            & \large 1083796 & \large up1083796@ac.upatras.gr \\
+            % \large Αριάδνη Σβωλοπούλου          & \large 1104806 & \large up1104806@ac.upatras.gr \\
+        \end{tabular}
+
+        \vspace*{1cm}
+
+        {\normalsize Τμήμα Μηχανικών Η/Υ \& Πληροφορικής}
+        \\
+        {\normalsize Πανεπιστήμιο Πατρών}
+        \\
+    \end{center}
+    \thispagestyle{empty} % Suppress page number on the title page
+\end{titlepage}
+
+% % Add this command to prevent blank pages
+% \let\cleardoublepage\clearpage
+% \frontmatter
+\tableofcontents
+% \mainmatter % chktex 1
+
+\printindex
+
+\chapter{Use Cases}
+
+\section{Customer management}
+
+\subsection{Σύντομη Περιγραφή}
+Η περίπτωση χρήσης "Customer Management" επιτρέπει στους διαχειριστές της κτηνιατρικής κλινικής και στο προσωπικό υποδοχής να διαχειρίζονται πλήρως τα προφίλ των πελατών (ιδιοκτητών κατοικίδιων). Αυτό περιλαμβάνει την καταχώρηση νέων πελατών, την ενημέρωση των στοιχείων τους, την προβολή του ιστορικού επισκέψεων, την αντιστοίχιση με τα κατοικίδιά τους, και την παρακολούθηση οικονομικών συναλλαγών.
+
+\subsection{Χειριστές}
+\begin{itemize}
+  \item Διαχειριστής συστήματος
+  \item Κτηνίατρος
+  \item Προσωπικό υποδοχής
+\end{itemize}
+
+\subsection{Γεγονός Έναρξης}
+Η περίπτωση χρήσης ξεκινά όταν:
+\begin{itemize}
+  \item Ένας διαχειριστής, κτηνίατρος ή υπάλληλος υποδοχής επιλέγει την επιλογή "Διαχείριση Πελατών" από το κεντρικό μενού
+%   \item Ένας νέος πελάτης εγγράφεται στο σύστημα μέσω της διαδικτυακής πλατφόρμας
+%   \item Το προσωπικό χρειάζεται να αναζητήσει πληροφορίες για έναν πελάτη
+%   \item Ο ιδιοκτήτης κατοικίδιου συνδέεται στο λογαριασμό του για να επεξεργαστεί τα στοιχεία του
+\end{itemize}
+
+\subsection{Ροή γεγονότων}
+
+\subsubsection{Βασική Ροή}
+\begin{enumerate}
+  \item Ο χρήστης μπαίνει στην ενότητα "Διαχείριση Πελατών".
+  \item Το σύστημα εμφανίζει μια λίστα με τους υπάρχοντες πελάτες, με δυνατότητες προσθήκης, αναζήτησης, φιλτραρίσματος και ταξινόμησης.
+  \item Ο χρήστης επιλέγει τη προσθήκη πελάτη.
+  \item Το σύστημα εμφανίζει φόρμα με τα απαραίτητα πεδία (ονοματεπώνυμο, στοιχεία επικοινωνίας, διεύθυνση κτλ.).
+  \item Ο χρήστης συμπληρώνει τα στοιχεία και υποβάλλει τη φόρμα.
+  \item Το σύστημα επικυρώνει τα δεδομένα, δημιουργεί και αποθηκεύει το νέο προφίλ πελάτη.
+  \item Το σύστημα αποστέλλει αυτόματα email/SMS καλωσορίσματος με οδηγίες ενεργοποίησης λογαριασμού.
+  \item Το σύστημα οδηγεί τον χρήστη στη βήμα 2 της βασικής ροής.
+\end{enumerate}
+
+\subsubsection{Εναλλακτικές Ροές}
+\begin{enumerate}
+  \item[1 ] Αναζήτηση/προβολή υπάρχοντος πελάτη:
+    \begin{enumerate}
+        \item[1.1 ] Ο χρήστης επιλέγει την επιλογή αναζήτησης
+        \item[1.2 ] Ο χρήστης εισάγει κριτήρια αναζήτησης (όνομα, email, τηλέφωνο, κ.λπ.)
+        \item[1.3 ] Το σύστημα εμφανίζει τα αποτελέσματα που ταιριάζουν
+        \item[1.4 ] Ο χρήστης επιλέγει την προβολή του επιθυμητού πελάτη από τα αποτελέσματα και προβάλει τα στοχεία του
+        \item[1.5 ] Ο χρήστης κλείνει το παράθυρο αναζήτησης και επιστρέφει στο βήμα 2 της βασικής ροής
+    \end{enumerate}
+  \item[2 ] Επεξεργασία προφίλ πελάτη:
+    \begin{enumerate}
+        \item [2.1 ] Ο χρήστης επιλέγει την επιλογή αναζήτησης
+        \item [2.2 ] Ο χρήστης εισάγει κριτήρια αναζήτησης (όνομα, email, τηλέφωνο, κ.λπ.)
+        \item [2.3 ] Το σύστημα εμφανίζει τα αποτελέσματα που ταιριάζουν
+        \item [2.4 ] Ο χρήστης επιλέγει την επεξεργασία του επιθυμητού πελάτη από τα αποτελέσματα και επεξεργάζεται τα στοιχεία του
+        \item [2.5 ] Ο χρήστης αποθηκεύει τις αλλαγές και επιστρέφει στο βήμα 2 της βασικής ροής
+    \end{enumerate}
+  \item[3 ] Ταξινόμηση πελατών:
+    \begin{enumerate}
+        \item [3.1 ] Ο χρήστης επιλέγει την επιλογή ταξινόμησης
+        \item [3.2 ] Ο χρήστης επιλέγει το κριτήριο ταξινόμησης (όνομα, ημερομηνία εγγραφής, κ.λπ.)
+        \item [3.3 ] Το σύστημα ταξινομεί τους πελάτες σύμφωνα με το επιλεγμένο κριτήριο και τους εμφανίζει στην οθόνη
+    \end{enumerate}
+  \item[4 ] Φιλτράρισμα πελατών:
+    \begin{enumerate}
+        \item [4.1 ] Ο χρήστης επιλέγει την επιλογή φιλτραρίσματος
+        \item [4.2 ] Ο χρήστης επιλέγει το κριτήριο φιλτραρίσματος (κατάσταση λογαριασμού, ημερομηνία εγγραφής, κατοικίδιο, κ.λπ.)
+        \item [4.3 ] Ο χρήστης εισάγει τις τιμές του κριτηρίου φιλτραρίσματος
+        \item [4.4 ] Το σύστημα εφαρμόζει το φίλτρο στη λίστα των πελατών και τους εμφανίζει στην οθόνη
+    \end{enumerate}
+  \item[5 ] Λανθασμένη εισαγωγή δεδομένων:
+    \begin{enumerate}
+        \item [5.1 ] Ο χρήστης επιλέγει την επιλογή προσθήκης
+        \item [5.2 ] Ο χρήστης εισάγει τα στοιχεία του νέου πελάτη σε λανθασμένη μορφή
+        \item [5.3 ] Το σύστημα εμφανίζει μήνυμα λάθους και οδηγεί τον χρήστη στο βήμα 4 της βασικής ροής
+    \end{enumerate}
+  \item[6 ] Ακύρωση προσθήκης:
+    \begin{enumerate}
+        \item [6.1 ] Ο χρήστης επιλέγει την επιλογή προσθήκης
+        \item [6.2 ] Ο χρήστης εισάγει τα στοιχεία του νέου πελάτη
+        \item [6.3 ] Ο χρήστης επιλέγει την επιλογή ακύρωσης
+        \item [6.4 ] Το σύστημα εμφανίζει μήνυμα επιβεβαίωσης και οδηγεί τον χρήστη στο βήμα 2 της βασικής ροής
+    \end{enumerate}
+  \item[7 ] Ακύρωση επεξεργασίας:
+    \begin{enumerate}
+        \item [7.1 ] Ο χρήστης επιλέγει την επιλογή αναζήτησης
+        \item [7.2 ] Ο χρήστης εισάγει κριτήρια αναζήτησης (όνομα, email, τηλέφωνο, κ.λπ.)
+        \item [7.3 ] Το σύστημα εμφανίζει τα αποτελέσματα που ταιριάζουν
+        \item [7.4 ] Ο χρήστης επιλέγει την επεξεργασία του επιθυμητού πελάτη από τα αποτελέσματα
+        \item [7.5 ] Ο χρήστης επιλέγει την επιλογή ακύρωσης
+        \item [7.6 ] Το σύστημα εμφανίζει μήνυμα επιβεβαίωσης και οδηγεί τον χρήστη στο βήμα 2 της βασικής ροής
+    \end{enumerate}
+  \item[8 ] Λανθασμένα κριτήρια αναζήτησης:
+    \begin{enumerate}
+        \item [8.1 ] Ο χρήστης επιλέγει την επιλογή αναζήτησης
+        \item [8.2 ] Ο χρήστης εισάγει λανθασμένα κριτήρια αναζήτησης
+        \item [8.3 ] Το σύστημα εμφανίζει μήνυμα λάθους και οδηγεί τον χρήστη στο βήμα 2 της εναλλακτικής ροής
+    \end{enumerate}
+%   \item[9 ] Εξαγωγή στατιστικών:
+%     \begin{enumerate}
+%         \item [9.1 ] Ο χρήστης επιλέγει την επιλογή εξαγωγής
+%         \item [9.2 ] Ο χρήστης επιλέγει το είδος των στατιστικών που επιθυμεί (πλήθος πελατών, κατανομή κατοικιδίων, κ.λπ.)
+%         \item [9.3 ] Το σύστημα εμφανίζει τα στατιστικά στοιχεία στην οθόνη και παρέχει τη δυνατότητα εξαγωγής σε αρχείο
+%     \end{enumerate}
+\end{enumerate}
+
+\subsection{Ειδικές απαιτήσεις}
+\begin{itemize}
+  \item Το σύστημα πρέπει να συμμορφώνεται με τους κανονισμούς GDPR για την προστασία προσωπικών δεδομένων
+  \item Τα δεδομένα των πελατών θα πρέπει να κρυπτογραφούνται κατά την αποθήκευση
+  \item Η πρόσβαση στα οικονομικά στοιχεία περιορίζεται σε χρήστες με ειδική εξουσιοδότηση
+  \item Το σύστημα πρέπει να διατηρεί αρχείο καταγραφής όλων των τροποποιήσεων (audit trail)
+  \item Υποστήριξη μαζικής εισαγωγής πελατών μέσω αρχείου CSV
+\end{itemize}
+
+\subsubsection{Μη λειτουργικές απαιτήσεις}
+\begin{itemize}
+  \item Ο χρόνος απόκρισης για αναζήτηση πελατών πρέπει να είναι λιγότερος από 2 δευτερόλεπτα ακόμα και με βάση δεδομένων 10.000+ πελατών
+  \item Το σύστημα πρέπει να παραμένει λειτουργικό ακόμα και με περιορισμένη συνδεσιμότητα στο διαδίκτυο, διατηρώντας τοπικό αντίγραφο των πιο πρόσφατων συναλλαγών
+  \item Το περιβάλλον χρήσης πρέπει να είναι προσβάσιμο από άτομα με αναπηρίες (WCAG 2.1 επίπεδο AA)
+  \item Το σύστημα πρέπει να υποστηρίζει πολλαπλές γλώσσες (Ελληνικά και Αγγλικά αρχικά)
+\end{itemize}
+
+\subsubsection{Περιβάλλον}
+\begin{itemize}
+  \item Διαδικτυακή πλατφόρμα προσβάσιμη μέσω φυλλομετρητών (Chrome, Firefox, Safari, Edge)
+  \item Εφαρμογή για κινητές συσκευές (iOS και Android)
+%   \item Διασύνδεση με συστήματα τιμολόγησης και λογιστικά προγράμματα
+%   \item Εκτυπωτές για αποδείξεις και έγγραφα
+\end{itemize}
+
+\subsection{Κατάσταση εισόδου}
+\begin{itemize}
+  \item Ο χρήστης έχει συνδεθεί στο σύστημα με τα κατάλληλα διαπιστευτήρια
+  \item Ο χρήστης έχει τα απαραίτητα δικαιώματα για τη διαχείριση πελατών
+  \item Η βάση δεδομένων του συστήματος είναι προσβάσιμη και λειτουργική
+\end{itemize}
+
+\subsection{Κάτασταση εξόδου}
+\begin{itemize}
+  \item Τα στοιχεία του πελάτη έχουν καταχωρηθεί ή ενημερωθεί επιτυχώς στη βάση δεδομένων
+  \item Όλες οι ενέργειες έχουν καταγραφεί στο αρχείο ιστορικού του συστήματος
+  \item Έχουν σταλεί οι κατάλληλες ειδοποιήσεις στους εμπλεκόμενους (π.χ. email επιβεβαίωσης στον πελάτη)
+  \item Ο χρήστης επιστρέφει στην κεντρική οθόνη διαχείρισης πελατών % ή προχωρά σε σχετική λειτουργία (π.χ. προγραμματισμός ραντεβού)
+\end{itemize}
+
+\subsection{Σημεία επέκτασης}
+\begin{itemize}
+%   \item Διασύνδεση με σύστημα αυτόματης αποστολής υπενθυμίσεων για εμβολιασμούς και προληπτικούς ελέγχους
+%   \item Ενσωμάτωση συστήματος πιστότητας (loyalty) με πόντους και εκπτώσεις
+%   \item Ανάπτυξη εξατομικευμένων προτάσεων υπηρεσιών και προϊόντων βάσει του προφίλ του πελάτη
+%   \item Δυνατότητα ψηφιακής υπογραφής εγγράφων συγκατάθεσης για θεραπείες
+%   \item Ενσωμάτωση τεχνολογίας αναγνώρισης προσώπου για γρήγορη ταυτοποίηση πελατών στην υποδοχή
+\end{itemize}
+
+\end{document} % chktex 17
+
+% \section{Customer management}
+
+% \subsection{Σύντομη Περιγραφή}
+
+
+
+% \subsection{Χειριστές}
+
+
+
+% \subsection{Γεγονός Έναρξης}
+
+
+
+% \subsection{Ροή γεγονότων}
+
+% \subsubsection{Βασική Ροή}
+
+
+
+% \subsubsection{Εναλλακτικές Ροές}
+
+
+
+% \subsection{Ειδικές απαιτήσεις}
+
+
+
+% \subsubsection{Μη λειτουργικές απαιτήσεις}
+
+
+
+% \subsubsection{Περιβάλλον}
+
+
+
+% \subsection{Κατάσταση εισόδου}
+
+
+
+% \subsection{Κάτασταση εξόδου}
+
+
+
+% \subsection{Σημεία επέκτασης}
