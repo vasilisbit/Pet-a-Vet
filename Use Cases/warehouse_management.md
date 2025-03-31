@@ -26,12 +26,4 @@ graph TB
     WM --> S
     WM --> R
     WM --> E
-
-    click WM call linkCallback("c:/Users/biovo/Desktop/GitHub Projects/Pet-a-Vet/Use Cases/Use-case-v0.1.tex#L567")
-    click P call linkCallback("c:/Users/biovo/Desktop/GitHub Projects/Pet-a-Vet/Use Cases/Use-case-v0.1.tex#L628")
-    click I call linkCallback("c:/Users/biovo/Desktop/GitHub Projects/Pet-a-Vet/Use Cases/Use-case-v0.1.tex#L651")
-    click O call linkCallback("c:/Users/biovo/Desktop/GitHub Projects/Pet-a-Vet/Use Cases/Use-case-v0.1.tex#L661")
-    click S call linkCallback("c:/Users/biovo/Desktop/GitHub Projects/Pet-a-Vet/Use Cases/Use-case-v0.1.tex#L642")
-    click R call linkCallback("c:/Users/biovo/Desktop/GitHub Projects/Pet-a-Vet/Use Cases/Use-case-v0.1.tex#L689")
-    click E call linkCallback("c:/Users/biovo/Desktop/GitHub Projects/Pet-a-Vet/Use Cases/Use-case-v0.1.tex#L680")
 ```
