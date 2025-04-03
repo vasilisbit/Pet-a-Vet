@@ -374,32 +374,32 @@
 
 % Title page with hidden number
 \begin{titlepage}
-  \vspace*{5cm}
-  \begin{center}
-    \includegraphics[width=0.3\textwidth]{../Resources/Pet-a-vet-logo-transparent.png}\\
-    % {\LARGE \textbf{\textit{Pet-à-Vet}}}\\ % chktex 8
-    \vspace*{0.5cm}
-    {\large \textbf{\textit{Use Cases}}}\\
-    {\large Τεχνολογία Λογισμικού}
     \vspace*{5cm}
-    \\
-    \vspace*{1cm}
-    \begin{tabular}{l l l}
-      \large Αλέξανδρος Γιαννακόπουλος   & \large 1100520 & \large up1100520@ac.upatras.gr \\ % chktex 19
-      \large Αριάδνη Σβωλοπούλου         & \large 1104806 & \large up1104806@ac.upatras.gr \\ % chktex 19
-      \large Βασίλειος Μπίτζας           & \large 1083796 & \large up1083796@ac.upatras.gr \\
-      \large Κωνσταντίνος Βασιλακόπουλος & \large 1090047 & \large up1090047@ac.upatras.gr \\
-      \large Σάββας Δανιήλογλου          & \large 1084640 & \large up1084640@ac.upatras.gr
-    \end{tabular}
+    \begin{center}
+        \includegraphics[width=0.3\textwidth]{../Resources/Pet-a-vet-logo-transparent.png}\\
+        % {\LARGE \textbf{\textit{Pet-à-Vet}}}\\ % chktex 8
+        \vspace*{0.5cm}
+        {\large \textbf{\textit{Domain Model}}}\\
+        {\large Τεχνολογία Λογισμικού}
+        \vspace*{5cm}
+        \\
+        \vspace*{1cm}
+        \begin{tabular}{l l l}
+            \large Αλέξανδρος Γιαννακόπουλος   & \large 1100520 & \large up1100520@ac.upatras.gr \\ % chktex 19
+            \large Αριάδνη Σβωλοπούλου         & \large 1104806 & \large up1104806@ac.upatras.gr \\ % chktex 19
+            \large Βασίλειος Μπίτζας           & \large 1083796 & \large up1083796@ac.upatras.gr \\
+            \large Κωνσταντίνος Βασιλακόπουλος & \large 1090047 & \large up1090047@ac.upatras.gr \\
+            \large Σάββας Δανιήλογλου          & \large 1084640 & \large up1084640@ac.upatras.gr
+        \end{tabular}
 
-    \vspace*{1cm}
+        \vspace*{1cm}
 
-    {\normalsize Τμήμα Μηχανικών Η/Υ \& Πληροφορικής}
-    \\
-    {\normalsize Πανεπιστήμιο Πατρών}
-    \\
-  \end{center}
-  \thispagestyle{empty} % Suppress page number on the title page
+        {\normalsize Τμήμα Μηχανικών Η/Υ \& Πληροφορικής}
+        \\
+        {\normalsize Πανεπιστήμιο Πατρών}
+        \\
+    \end{center}
+    \thispagestyle{empty} % Suppress page number on the title page
 \end{titlepage}
 
 % % Add this command to prevent blank pages
@@ -410,6 +410,45 @@
 
 \printindex
 
-\chapter{Use Cases}
+\chapter{Domain Model}
+
+\section{Δίαγραμμα}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{../Resources/Domain-model-v0.1.png}
+    \caption{Domain Model}\label{fig:domain_model}
+\end{figure}
+
+\section{Περιγραφή}
+\begin{itemize}
+    \item \textbf{User}\\
+          Γενική υπερκλάση από την οποία κληρονομούν οι ρόλοι Customer, Veterinarian, Secretary και Pet Groomer. Περιέχει τα βασικά στοιχεία σύνδεσης και ταυτοποίησης. % chktex 19
+    \item \textbf{Customer}\\
+          Ο πελάτης του κτηνιατρείου. Μπορεί να καταχωρήσει κατοικίδια, να κλείσει ραντεβού, να διαχειριστεί τις συνδρομές του και να κάνει αγορές προϊόντων. % chktex 19
+    \item \textbf{Veterinarian}\\
+          Ο γιατρός του κτηνιατρείου. Μπορεί να δει και να ενημερώσει τα ιατρικά αρχεία των κατοικιδίων, να δημιουργεί ραντεβού και να έχει πρόσβαση σε στατιστικά στοιχεία. % chktex 19
+    \item \textbf{Secretary}\\
+          Ο γραμματέας, που υποστηρίζει τη διαχείριση πελατών, ραντεβού και αποθήκης, καθώς και έχει πρόσβαση στα ιατρικά δεδομένα. % chktex 19
+    \item \textbf{Pet Groomer}\\
+          Ο χρήστης που αναλαμβάνει τις υπηρεσίες καλλωπισμού. Μπορεί να διαχειρίζεται ραντεβού, αλλά δεν έχει πρόσβαση σε ιατρικά αρχεία ή παραγγελίες. % chktex 19
+    \item \textbf{Pet}\\
+          Το κατοικίδιο που ανήκει σε έναν πελάτη. Περιέχει βασικά χαρακτηριστικά (είδος, ηλικία κ.λπ.) και συνδέεται με ιατρικά αρχεία. % chktex 19
+    \item \textbf{Medical Record}\\
+          Περιέχει το ιατρικό ιστορικό του κατοικιδίου. Συνδέεται με τον κτηνίατρο και τα ραντεβού. % chktex 19
+    \item \textbf{Appointment}\\
+          Ραντεβού που μπορεί να δημιουργηθεί από τον πελάτη, τον γραμματέα ή τον groomer και να αφορά κτηνιατρική επίσκεψη ή καλλωπισμό. % chktex 19
+    \item \textbf{Cart}\\
+          Το καλάθι αγορών του πελάτη, που περιέχει προϊόντα και οδηγεί σε παραγγελία (Order). % chktex 19
+    \item \textbf{Order}\\
+          Η παραγγελία που δημιουργείται μετά από αγορά. Συνδέεται με πληρωμή και πελάτη. % chktex 19
+    \item \textbf{Payment}\\
+          Η πληρωμή για μία παραγγελία ή συνδρομή. Μπορεί να γίνει με κάρτα ή άλλες μεθόδους. % chktex 19
+    \item \textbf{Subscription}\\
+          Η συνδρομή του πελάτη σε υπηρεσίες με βάση το πακέτο που έχει επιλέξει. Συνδέεται με πληρωμή. % chktex 19
+    \item \textbf{Warehouse}\\
+          Η αποθήκη που διαχειρίζεται το απόθεμα των προϊόντων. % chktex 19
+    \item \textbf{Product}\\
+          Το προϊόν που ανήκει στην αποθήκη και είναι διαθέσιμο προς πώληση. Περιλαμβάνει ιατροφαρμακευτικά είδη και άλλα προϊόντα. % chktex 19
+\end{itemize}
 
 \end{document} % chktex 17
