@@ -379,7 +379,7 @@
     \includegraphics[width=0.3\textwidth]{../Resources/Pet-a-vet-logo-transparent.png}\\
     % {\LARGE \textbf{\textit{Pet-à-Vet}}}\\ % chktex 8
     \vspace*{0.5cm}
-    {\large \textbf{\textit{Use Cases}}}\\
+    {\large \textbf{\textit{Use-case-v0.1}}}\\
     {\large Τεχνολογία Λογισμικού}
     \vspace*{5cm}
     \\
@@ -412,6 +412,10 @@
 
 \chapter{Use Cases}
 
+\section{Περίληψη}
+
+Η παρούσα αναφορά περιγράφει την διαδικασία ανάπτυξης περιπτώσεων χρήσης της εφαρμογής \textit{Pet-à-Vet}, η οποία είναι μια εφαρμογή για την διαχείριση κτηνιατρικών κλινικών. Σκοπός της αναφοράς είναι να καταγράψει τις περιπτώσεις χρήσης της εφαρμογής, καθώς και τις απαιτήσεις που προκύπτουν από αυτές. Η αναφορά αυτή είναι το αποτέλεσμα συνεργασίας πέντε μελών, οι οποίοι εργάστηκαν ομαδικά για την ανάπτυξη της εφαρμογής. Κάθε μέλος της ομάδας ανέπτυξε τουλάχιστον δύο περιπτώσεις χρήσης και σχετικές αναφορές για αυτές, οι οποίες περιγράφουν τις λειτουργίες της εφαρμογής. Κάθε περίπτωση χρήσης εξετάστηκε και ελέγχθηκε από όλα τα μέλη της ομάδας, προκειμένου να υπάρχει συνοχή και ομοιομορφία στην παρουσίαση και την περιγραφή τους. Χρησιμοποιήθκαν τα εργαλεία \textit{Word} και \textit{LaTeX} για την συγγραφή των κειμένων. % chktex 19
+
 \section{Authentication}
 
 \subsection{Σύντομη Περιγραφή}
@@ -424,6 +428,7 @@
   \item Κτηνίατρος
   \item Pet Groomer
   \item Πελάτης
+  \item Εξωτερική βάση δεδομένων % chktex 19
 \end{itemize}
 
 \subsection{Γεγονός Έναρξης}
@@ -490,6 +495,7 @@
   \item Κτηνίατρος
   \item Pet Groomer
   \item Πελάτης
+  \item Εξωτερική βάση δεδομένων % chktex 19
 \end{itemize}
 
 \subsection{Γεγονός Έναρξης}
@@ -579,6 +585,7 @@
   \item Κτηνίατρος
   \item Pet Groomer
   \item Πελάτης
+  \item Εξωτερική βάση δεδομένων % chktex 19
 \end{itemize}
 
 \subsection{Γεγονός Έναρξης}
@@ -665,6 +672,7 @@
 \begin{itemize}
   \item Διαχειριστής συστήματος
   \item Γραμματέας
+  \item Εξωτερική βάση δεδομένων % chktex 19
 \end{itemize}
 
 \subsection{Γεγονός Έναρξης}
@@ -794,6 +802,11 @@
   \item Ο χρήστης επιστρέφει στην κεντρική οθόνη διαχείρισης πελατών % ή προχωρά σε σχετική λειτουργία (π.χ. προγραμματισμός ραντεβού) % chktex 19
 \end{itemize}
 
+\subsection{Σημεία Επέκτασης}
+\begin{itemize}
+  \item Ο χρήστης μπορεί να φιλτράρει τα αποτελέσματα που εμφανίζονται στην οθόνη (`Filter') % chktex 19
+\end{itemize}
+
 \section{Filter}
 
 \subsection{Σύντομη Περιγραφή}
@@ -889,6 +902,7 @@
   \item Διαχειριστής συστήματος
   \item Κτηνίατρος
   \item Γραμματέας
+  \item Εξωτερική βάση δεδομένων % chktex 19
 \end{itemize}
 
 \subsection{Γεγονός Έναρξης}
@@ -1020,6 +1034,11 @@
   \item Καταγραφή της δραστηριότητας στο σύστημα % chktex 19
 \end{itemize}
 
+\subsection{Σημεία Επέκτασης}
+\begin{itemize}
+  \item Ο χρήστης μπορεί να φιλτράρει τα αποτελέσματα που εμφανίζονται στην οθόνη (`Filter') % chktex 19
+\end{itemize}
+
 \section{Perform Inventory}
 
 \subsection{Σύντομη Περιγραφή}
@@ -1030,6 +1049,7 @@
   \item Διαχειριστής συστήματος
   \item Κτηνίατρος
   \item Γραμματέας
+  \item Εξωτερική βάση δεδομένων % chktex 19
 \end{itemize}
 
 \subsection{Γεγονός Έναρξης}
@@ -1141,11 +1161,6 @@
   \item Έχουν δημιουργηθεί οι σχετικές λογιστικές εγγραφές για τις διαφορές αποθέματος % chktex 19
 \end{itemize}
 
-\subsection{Σημεία Επέκτασης}
-\begin{itemize}
-  \item Δυνατότητα εξαγωγής αναφορών σε διάφορες μορφές (`View Statistics') % chktex 19
-\end{itemize}
-
 \section{Manage Orders}
 
 \subsection{Σύντομη Περιγραφή}
@@ -1156,6 +1171,7 @@
   \item Διαχειριστής συστήματος
   \item Κτηνίατρος
   \item Γραμματέας
+  \item Εξωτερική βάση δεδομένων % chktex 19
 \end{itemize}
 
 \subsection{Γεγονός Έναρξης}
@@ -1525,6 +1541,7 @@
 \begin{itemize}
   \item Διαχειριστής
   \item Πελάτης
+  \item Εξωτερική βάση δεδομένων % chktex 19
 \end{itemize}
 
 \subsection{Γεγονός Έναρξης}
@@ -1598,6 +1615,11 @@
   \item Ο χρήστης θα έχει τα προϊόντα που θέλει να αγοράσει στο καλάθι του, και θα μπορεί οποιαδήποτε στιγμή να προχωρήσει στην διαδικασία της παραγγελίας και πληρωμής τους. % chktex 19
 \end{itemize}
 
+\subsection{Σημεία Επέκτασης}
+\begin{itemize}
+  \item Ο χρήστης μπορεί να φιλτράρει τα αποτελέσματα που εμφανίζονται στην οθόνη (`Filter') % chktex 19
+\end{itemize}
+
 \section{Payment} % chktex 19
 
 \subsection{Σύντομη Περιγραφή}
@@ -1607,6 +1629,7 @@
 \begin{itemize}
   \item Διαχειριστής
   \item Πελάτης
+  \item Εξωτερικό σύστημα πληρωμών
 \end{itemize}
 
 \subsection{Γεγονός Έναρξης}
@@ -2020,6 +2043,11 @@
   \item Τo σύστημα αποθήκευσε τη φόρμα “Diagnosis, Treatment, Prescription”
 \end{itemize}
 
+\subsection{Σημεία Επέκτασης}
+\begin{itemize}
+  \item Ο χρήστης μπορεί να φιλτράρει τα αποτελέσματα που εμφανίζονται στην οθόνη (`Filter') % chktex 19
+\end{itemize}
+
 \section{Subscriptions}
 
 \subsection{Σύντομη Περιγραφή}
@@ -2100,6 +2128,11 @@
   \item Το σύστημα έχει ενημερωθεί για τη τρέχουσα subscription
 \end{itemize}
 
+\subsection{Σημεία Επέκτασης}
+\begin{itemize}
+  \item Ο πελάτης μπορεί να πληρώσει για αναβάθμιση σε καλύτερο πακέτο (`Payment') % chktex 19
+\end{itemize}
+
 \section{Pet's Profile Creation} % chktex 19
 
 \subsection{Σύντομη Περιγραφή}
@@ -2110,6 +2143,7 @@
   \item Διαχειριστής
   \item Πελάτης
   \item Κτηνίατρος
+  \item Εξωτερική βάση δεδομένων % chktex 19
 \end{itemize}
 
 \subsection{Γεγονός Έναρξης}
@@ -2264,14 +2298,23 @@
   \item Το σύστημα έχει αποθηκεύσει τα στατιστικά που έχει δει ο χρήστης % chktex 19
 \end{itemize}
 
+\subsection{Σημεία Επέκτασης}
+\begin{itemize}
+  \item Ο χρήστης μπορεί να φιλτράρει τα αποτελέσματα που εμφανίζονται στην οθόνη (`Filter') % chktex 19
+\end{itemize}
+
 \chapter{Διάγραμμα} % chktex 19
+
+\section{Περίληψη}
+
+Έχοντας ολοκληρώσει την ανάλυση των περιπτώσεων χρήσης, ακολουθεί στην κατασκευή του διαγράμματος περιπτώσεων χρήσης. Χρησιμοποιήθηκε το εργαλείο \textit{Visual Paradigm} για την σχεδίαση του διαγραμμάτος, με την βοήθεια και επίβλεψη όλων των μελών της ομάδας. % chktex 19
 
 \section{Διάγραμμα περιπτώσεων χρήσης}
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=1\textwidth]{../Resources/Use-casel-v0.1.png}
-  \caption{Διάγραμμα περιπτώσεων χρήσης}\label{fig:use-case-diagram}
+  \caption{Διάγραμμα περιπτώσεων χρήσης \textit{Pet-à-Vet}}\label{fig:use-case-diagram}
 \end{figure}
 
 \end{document} % chktex 17
