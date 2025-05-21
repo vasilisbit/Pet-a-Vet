@@ -1,0 +1,338 @@
+DROP DATABASE IF EXISTS petavet;
+CREATE DATABASE petavet;
+USE petavet;
+
+-- User (base entity)
+CREATE TABLE IF NOT EXISTS User (
+    user_id INT(11) NOT NULL AUTO_INCREMENT,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    full_name VARCHAR(150) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    role ENUM('ADMINISTRATOR', 'VETERINARIAN', 'SECRETARY', 'PETGROOMER', 'CUSTOMER') NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    last_login DATETIME,
+    status ENUM('ACTIVE', 'INACTIVE', 'SUSPENDED') NOT NULL DEFAULT 'ACTIVE',
+    PRIMARY KEY (user_id)
+);
+
+-- Customer (inherits from User)
+CREATE TABLE IF NOT EXISTS Customer (
+    customer_id INT(11) NOT NULL,
+    subscription_id INT(11),
+    balance DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    preferred_payment_method VARCHAR(50),
+    PRIMARY KEY (customer_id),
+    CONSTRAINT fk_customer_user
+    FOREIGN KEY (customer_id)
+    REFERENCES User(user_id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+-- Veterinarian (inherits from User)
+CREATE TABLE IF NOT EXISTS Veterinarian (
+    veterinarian_id INT(11) NOT NULL,
+    specialization VARCHAR(100) NOT NULL,
+    license_number VARCHAR(50) NOT NULL UNIQUE,
+    bio TEXT,
+    availability JSON,
+    PRIMARY KEY (veterinarian_id),
+    CONSTRAINT fk_veterinarian_user
+    FOREIGN KEY (veterinarian_id)
+    REFERENCES User(user_id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+-- Secretary (inherits from User)
+CREATE TABLE IF NOT EXISTS Secretary (
+    secretary_id INT(11) NOT NULL,
+    department VARCHAR(50) NOT NULL,
+    permissions JSON,
+    PRIMARY KEY (secretary_id),
+    CONSTRAINT fk_secretary_user
+    FOREIGN KEY (secretary_id)
+    REFERENCES User(user_id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+-- PetGroomer (inherits from User)
+CREATE TABLE IF NOT EXISTS PetGroomer (
+    groomer_id INT(11) NOT NULL,
+    specialization VARCHAR(100) NOT NULL,
+    availability JSON,
+    services_offered JSON,
+    PRIMARY KEY (groomer_id),
+    CONSTRAINT fk_groomer_user
+    FOREIGN KEY (groomer_id)
+    REFERENCES User(user_id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+-- Administrator (inherits from User)
+CREATE TABLE IF NOT EXISTS Administrator (
+    admin_id INT(11) NOT NULL,
+    admin_level INT(11) NOT NULL DEFAULT 1,
+    access_rights JSON,
+    PRIMARY KEY (admin_id),
+    CONSTRAINT fk_admin_user
+    FOREIGN KEY (admin_id)
+    REFERENCES User(user_id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+-- Pet
+CREATE TABLE IF NOT EXISTS Pet (
+    pet_id INT(11) NOT NULL AUTO_INCREMENT,
+    owner_id INT(11) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    species VARCHAR(50) NOT NULL,
+    breed VARCHAR(100),
+    birth_date DATE,
+    gender ENUM('MALE', 'FEMALE', 'UNKNOWN') NOT NULL,
+    weight DECIMAL(5,2),
+    microchip_id VARCHAR(50) UNIQUE,
+    photo_url VARCHAR(255),
+    notes TEXT,
+    status ENUM('ACTIVE', 'INACTIVE', 'DECEASED') NOT NULL DEFAULT 'ACTIVE',
+    PRIMARY KEY (pet_id),
+    CONSTRAINT fk_pet_customer
+    FOREIGN KEY (owner_id)
+    REFERENCES Customer(customer_id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+-- MedicalRecord
+CREATE TABLE IF NOT EXISTS MedicalRecord (
+    record_id INT(11) NOT NULL AUTO_INCREMENT,
+    pet_id INT(11) NOT NULL,
+    veterinarian_id INT(11) NOT NULL,
+    appointment_id INT(11),
+    diagnosis TEXT,
+    treatment TEXT,
+    prescription TEXT,
+    record_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    follow_up_date DATE,
+    status ENUM('OPEN', 'CLOSED', 'REQUIRES_FOLLOWUP') NOT NULL DEFAULT 'OPEN',
+    PRIMARY KEY (record_id),
+    CONSTRAINT fk_medicalrecord_pet
+    FOREIGN KEY (pet_id)
+    REFERENCES Pet(pet_id)
+    ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT fk_medicalrecord_veterinarian
+    FOREIGN KEY (veterinarian_id)
+    REFERENCES Veterinarian(veterinarian_id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+-- Product
+CREATE TABLE IF NOT EXISTS Product (
+    product_id INT(11) NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    description TEXT,
+    price DECIMAL(10,2) NOT NULL,
+    cost DECIMAL(10,2) NOT NULL,
+    barcode VARCHAR(50) UNIQUE,
+    requires_prescription BOOLEAN NOT NULL DEFAULT FALSE,
+    manufacturer VARCHAR(100),
+    image_url VARCHAR(255),
+    status ENUM('ACTIVE', 'DISCONTINUED', 'OUT_OF_STOCK') NOT NULL DEFAULT 'ACTIVE',
+    PRIMARY KEY (product_id)
+);
+
+-- Appointment
+CREATE TABLE IF NOT EXISTS Appointment (
+    appointment_id INT(11) NOT NULL AUTO_INCREMENT,
+    pet_id INT(11) NOT NULL,
+    service_provider_id INT(11) NOT NULL,
+    creator_id INT(11) NOT NULL,
+    service_type ENUM('MEDICAL', 'GROOMING') NOT NULL,
+    appointment_date DATE NOT NULL,
+    appointment_time TIME NOT NULL,
+    duration INT(11) NOT NULL DEFAULT 30,
+    reason TEXT,
+    notes TEXT,
+    status ENUM('SCHEDULED', 'COMPLETED', 'CANCELLED', 'NO_SHOW') NOT NULL DEFAULT 'SCHEDULED',
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (appointment_id),
+    CONSTRAINT fk_appointment_pet
+    FOREIGN KEY (pet_id)
+    REFERENCES Pet(pet_id)
+    ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT fk_appointment_provider
+    FOREIGN KEY (service_provider_id)
+    REFERENCES User(user_id)
+    ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT fk_appointment_creator
+    FOREIGN KEY (creator_id)
+    REFERENCES User(user_id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+-- Add appointment FK to MedicalRecord after Appointment table is created
+ALTER TABLE MedicalRecord 
+ADD CONSTRAINT fk_medicalrecord_appointment
+FOREIGN KEY (appointment_id)
+REFERENCES Appointment(appointment_id)
+ON UPDATE CASCADE ON DELETE SET NULL;
+
+-- Inventory
+CREATE TABLE IF NOT EXISTS Inventory (
+    inventory_id INT(11) NOT NULL AUTO_INCREMENT,
+    product_id INT(11) NOT NULL,
+    quantity_in_stock_registered INT(11) NOT NULL DEFAULT 0,
+	real_quantity_stock INT(11) NOT NULL DEFAULT 0,
+    min_stock_level INT(11) NOT NULL DEFAULT 5,
+    max_stock_level INT(11) NOT NULL DEFAULT 100,
+    location VARCHAR(50),
+    last_count_date DATE,
+    expiry_date DATE,
+    lot_number VARCHAR(50),
+    last_updated DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (inventory_id),
+    CONSTRAINT fk_inventory_product
+    FOREIGN KEY (product_id)
+    REFERENCES Product(product_id)
+    ON UPDATE CASCADE ON DELETE RESTRICT,
+    UNIQUE KEY uc_inventory_product (product_id)
+);
+
+-- Cart
+CREATE TABLE IF NOT EXISTS Cart (
+    cart_id INT(11) NOT NULL AUTO_INCREMENT,
+    customer_id INT(11) NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (cart_id),
+    CONSTRAINT fk_cart_customer
+    FOREIGN KEY (customer_id)
+    REFERENCES Customer(customer_id)
+    ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+-- CartItem
+CREATE TABLE IF NOT EXISTS CartItem (
+    cart_item_id INT(11) NOT NULL AUTO_INCREMENT,
+    cart_id INT(11) NOT NULL,
+    product_id INT(11) NOT NULL,
+    quantity INT(11) NOT NULL DEFAULT 1,
+    price DECIMAL(10,2) NOT NULL,
+    added_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (cart_item_id),
+    CONSTRAINT fk_cartitem_cart
+    FOREIGN KEY (cart_id)
+    REFERENCES Cart(cart_id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT fk_cartitem_product
+    FOREIGN KEY (product_id)
+    REFERENCES Product(product_id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+-- Order (using backticks because 'order' is a reserved word)
+CREATE TABLE IF NOT EXISTS `Order` (
+    order_id INT(11) NOT NULL AUTO_INCREMENT,
+    customer_id INT(11) NOT NULL,
+    total_amount DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    status ENUM('PENDING', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELLED') NOT NULL DEFAULT 'PENDING',
+    payment_method ENUM('CARD', 'CASH') NOT NULL,
+    payment_status ENUM('PENDING', 'PAID', 'REFUNDED') NOT NULL DEFAULT 'PENDING',
+    shipping_address VARCHAR(255) NOT NULL,
+    order_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    shipping_date DATETIME,
+    delivery_date DATETIME,
+    notes TEXT,
+    PRIMARY KEY (order_id),
+    CONSTRAINT fk_order_customer
+    FOREIGN KEY (customer_id)
+    REFERENCES Customer(customer_id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+-- OrderItem
+CREATE TABLE IF NOT EXISTS OrderItem (
+    order_item_id INT(11) NOT NULL AUTO_INCREMENT,
+    order_id INT(11) NOT NULL,
+    product_id INT(11) NOT NULL,
+    quantity INT(11) NOT NULL DEFAULT 1,
+    price DECIMAL(10,2) NOT NULL,
+    discount DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    PRIMARY KEY (order_item_id),
+    CONSTRAINT fk_orderitem_order
+    FOREIGN KEY (order_id)
+    REFERENCES `Order`(order_id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT fk_orderitem_product
+    FOREIGN KEY (product_id)
+    REFERENCES Product(product_id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+-- Subscription
+CREATE TABLE IF NOT EXISTS Subscription (
+    subscription_id INT(11) NOT NULL AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    price JSON NOT NULL,
+    type ENUM('BASIC', 'PREMIUM', 'CLINIC') NOT NULL DEFAULT 'BASIC',
+    is_active BOOLEAN NOT NULL DEFAULT FALSE,
+    PRIMARY KEY (subscription_id)
+);
+
+-- CustomerSubscription
+CREATE TABLE IF NOT EXISTS CustomerSubscription (
+    customer_subscription_id INT(11) NOT NULL AUTO_INCREMENT,
+    customer_id INT(11) NOT NULL,
+    subscription_id INT(11) NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    auto_renew BOOLEAN NOT NULL DEFAULT TRUE,
+    payment_method VARCHAR(50) NOT NULL,
+    status ENUM('ACTIVE', 'CANCELLED', 'EXPIRED') NOT NULL DEFAULT 'ACTIVE',
+    PRIMARY KEY (customer_subscription_id),
+    CONSTRAINT fk_customersubscription_customer
+    FOREIGN KEY (customer_id)
+    REFERENCES Customer(customer_id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT fk_customersubscription_subscription
+    FOREIGN KEY (subscription_id)
+    REFERENCES Subscription(subscription_id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+-- Statistics
+CREATE TABLE IF NOT EXISTS Statistics (
+    stat_id INT(11) NOT NULL AUTO_INCREMENT,
+    category VARCHAR(50) NOT NULL,
+    title VARCHAR(100) NOT NULL,
+    data JSON NOT NULL,
+    date_range VARCHAR(50) NOT NULL,
+    generated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_by INT(11) NOT NULL,
+    PRIMARY KEY (stat_id),
+    CONSTRAINT fk_statistics_user
+    FOREIGN KEY (created_by)
+    REFERENCES User(user_id)
+    ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+-- Database administrator users
+CREATE TABLE IF NOT EXISTS DBA (
+    dba_id INT(11) NOT NULL AUTO_INCREMENT,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    start_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    end_date DATETIME,
+    PRIMARY KEY (dba_id)
+);
+
+-- Log for tracking actions
+CREATE TABLE IF NOT EXISTS Log (
+    log_id INT(11) NOT NULL AUTO_INCREMENT,
+    username VARCHAR(255) NOT NULL,
+    log_date_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    log_action VARCHAR(255) NOT NULL,
+    PRIMARY KEY (log_id)
+);
