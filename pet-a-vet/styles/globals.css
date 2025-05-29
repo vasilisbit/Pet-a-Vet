@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    /* Light Theme Color Palette */
+    --background: 0 0% 100%; /* Pure White #FFFFFF */
+    --foreground: 222.2 84% 4.9%; /* Midnight Navy #010816 */
+    --card: 0 0% 100%; /* Pure White #FFFFFF */
+    --card-foreground: 222.2 84% 4.9%; /* Midnight Navy #010816 */
+    --popover: 0 0% 100%; /* Pure White #FFFFFF */
+    --popover-foreground: 222.2 84% 4.9%; /* Midnight Navy #010816 */
+    --primary: 173 80% 40%; /* Caribbean Teal #14B7A4 */
+    --primary-foreground: 210 40% 98%; /* Snow Drift #F7F9FB */
+    --secondary: 210 40% 96.1%; /* Whisper Blue #F1F5F9 */
+    --secondary-foreground: 222.2 47.4% 11.2%; /* Deep Space Blue #0F172A */
+    --muted: 210 40% 96.1%; /* Whisper Blue #F1F5F9 */
+    --muted-foreground: 215.4 16.3% 46.9%; /* Slate Gray #64748B */
+    --accent: 210 40% 96.1%; /* Whisper Blue #F1F5F9 */
+    --accent-foreground: 222.2 47.4% 11.2%; /* Deep Space Blue #0F172A */
+    --destructive: 0 84.2% 60.2%; /* Fire Engine Red #EE4444 */
+    --destructive-foreground: 210 40% 98%; /* Snow Drift #F7F9FB */
+    --border: 214.3 31.8% 91.4%; /* Light Steel #E2E8F0 */
+    --input: 214.3 31.8% 91.4%; /* Light Steel #E2E8F0 */
+    --ring: 173 80% 40%; /* Caribbean Teal #14B7A4 */
+    
+    /* Custom Chart Color Palette */
+    --chart-1: 209 80% 60%; /* Sky Blue #479BEA */
+    --chart-2: 152 60% 50%; /* Mint Green #32CC84 */
+    --chart-3: 32 95% 55%; /* Tangerine #F9931F */
+    --chart-4: 271 76% 70%; /* Lavender #B478EC */
+    --chart-5: 360 83% 62%; /* Tomato Red #EE4D4D */
+    
+    --radius: 0.5rem;
+    
+    /* Sidebar - Light Theme */
+    --sidebar-background: 210 40% 98%; /* Snow Drift #F7F9FB */
+    --sidebar-foreground: 222.2 47.4% 11.2%; /* Deep Space Blue #0F172A */
+    --sidebar-primary: 173 80% 40%; /* Caribbean Teal #14B7A4 */
+    --sidebar-primary-foreground: 210 40% 98%; /* Snow Drift #F7F9FB */
+    --sidebar-accent: 210 40% 96.1%; /* Whisper Blue #F1F5F9 */
+    --sidebar-accent-foreground: 222.2 47.4% 11.2%; /* Deep Space Blue #0F172A */
+    --sidebar-border: 214.3 31.8% 91.4%; /* Light Steel #E2E8F0 */
+    --sidebar-ring: 173 80% 40%; /* Caribbean Teal #14B7A4 */
+    
+    /* Complementary Neutrals & Accents */
+    --off-white: 258 15% 95.7%; /* Off-White #F4F3F7 */
+    --cool-gray: 252 9% 81.2%; /* Cool Gray #D1CFD8 */
+    --almost-black: 225 27% 14.9%; /* Almost Black #1A1F2F */
+    --slate-blue: 226 23% 31.8%; /* Slate Blue #394364 */
+    --light-bronze: 32 18% 68.4%; /* Light Bronze #C9B28E */
+    --cream-tan: 39 31% 78.6%; /* Cream Tan #E0CBA4 */
+    
+    /* Professional Chart Palette */
+    --appointments-color: 207 68% 59%; /* Pacific Blue #4299E1 */
+    --diagnoses-color: 152 54% 53%; /* Emerald Green #48BB78 */
+    --revenue-color: 28 81% 56%; /* Pumpkin Orange #ED8936 */
+    --demographics-color: 258 70% 70%; /* Orchid Purple #9F7AEA */
+    --color-primary: 213 94% 68%; /* Royal Blue #2563EB */
+    --color-secondary: 158 80% 40%; /* Forest Green #059669 */
+    --color-accent: 0 84% 60%; /* Crimson Red #DC2626 */
+    --color-warning: 32 95% 44%; /* Amber Orange #D97706 */
+    --color-info: 258 90% 66%; /* Grape Purple #7C3AED */
+    --color-success: 142 76% 36%; /* Kelly Green #16A34A */
+  }
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
