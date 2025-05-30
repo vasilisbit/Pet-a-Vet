@@ -1,4 +1,4 @@
-# Pet-a-Vet License
+# Pet-à-Vet License
 
 Copyright © 2025 Pet-a-Vet Team
 
