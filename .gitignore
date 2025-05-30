@@ -1,0 +1,24 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+pet-a-vet/node_modules
+
+# next.js
+pet-a-vet/.next/
+pet-a-vet/out/
+
+# production
+pet-a-vet/build
+
+# debug
+pet-a-vet/npm-debug.log*
+pet-a-vet/yarn-debug.log*
+pet-a-vet/yarn-error.log*
+pet-a-vet/.pnpm-debug.log*
+
+# env files
+pet-a-vet/.env*
+
+# typescript
+pet-a-vet/*.tsbuildinfo
+pet-a-vet/next-env.d.ts
