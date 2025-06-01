@@ -5,7 +5,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/IBibla/Pet-a-Vet">
+  <a href="https://github.com/IBilba/Pet-a-Vet">
     <img src="Resources/Pet-a-vet-logo-transparent.png" alt="Pet-à-Vet Logo" width="200" height="200">
   </a>
 
@@ -17,9 +17,9 @@
     <br />
     <a href="Pet-a-Vet.pdf">Δείτε την Τεκμηρίωση</a>
     ·
-    <a href="https://github.com/IBibla/Pet-a-Vet/issues">Αναφορά Bug</a>
+    <a href="https://github.com/IBilba/Pet-a-Vet/issues">Αναφορά Bug</a>
     ·
-    <a href="https://github.com/IBibla/Pet-a-Vet/issues">Πρόταση Feature</a>
+    <a href="https://github.com/IBilba/Pet-a-Vet/issues">Πρόταση Feature</a>
   </p>
 </div>
 
@@ -407,7 +407,7 @@ Pet-a-Vet/
 1. **Κλωνοποίηση του repository**:
 
    ```bash
-   git clone https://github.com/IBibla/Pet-a-Vet.git
+   git clone https://github.com/IBilba/Pet-a-Vet.git
    cd Pet-a-Vet/pet-a-vet
    ```
 
@@ -656,8 +656,8 @@ npm run lint         # Εκτέλεση ESLint
 
 ### Κορυφαίοι Συνεισφέροντες
 
-<a href="https://github.com/IBibla/Pet-a-Vet/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=IBibla/Pet-a-Vet" alt="contrib.rocks image" />
+<a href="https://github.com/IBilba/Pet-a-Vet/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=IBilba/Pet-a-Vet" alt="contrib.rocks image" />
 </a>
 
 <p align="right">(<a href="#readme-top">πίσω στην κορυφή</a>)</p>
@@ -682,7 +682,7 @@ npm run lint         # Εκτέλεση ESLint
 - **Τμήμα**: Μηχανικών Η/Υ και Πληροφορικής
 - **Μάθημα**: Εργαστήριο Τεχνολογίας Λογισμικού
 
-**Project Link**: [https://github.com/IBibla/Pet-a-Vet](https://github.com/IBibla/Pet-a-Vet)
+**Project Link**: [https://github.com/IBilba/Pet-a-Vet](https://github.com/IBilba/Pet-a-Vet)
 
 <p align="right">(<a href="#readme-top">πίσω στην κορυφή</a>)</p>
 
