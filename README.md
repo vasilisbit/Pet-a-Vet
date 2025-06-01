@@ -1,15 +1,33 @@
-# Pet-à-Vet 🐾
+<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 
-**Ψηφιακή Πλατφόρμα για Κτηνιατρικές Υπηρεσίες**
+<a id="readme-top"></a>
 
-Ολοκληρωμένο σύστημα διαχείρισης κτηνιατρικών πρακτικών σχεδιασμένο για τον εξορθολογισμό των λειτουργιών κτηνιατρικών κλινικών, ιδιοκτητών κατοικίδιων και κτηνιάτρων.
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/IBibla/Pet-a-Vet">
+    <img src="Resources/Pet-a-vet-logo-transparent.png" alt="Pet-à-Vet Logo" width="200" height="200">
+  </a>
+
+  <p align="center">
+    <strong>Ψηφιακή Πλατφόρμα για Κτηνιατρικές Υπηρεσίες</strong>
+    <br />
+    Ολοκληρωμένο σύστημα διαχείρισης κτηνιατρικών πρακτικών σχεδιασμένο για τον εξορθολογισμό των λειτουργιών κτηνιατρικών κλινικών, ιδιοκτητών κατοικίδιων και κτηνιάτρων.
+    <br />
+    <br />
+    <a href="Pet-a-Vet.pdf">Δείτε την Τεκμηρίωση</a>
+    ·
+    <a href="https://github.com/IBibla/Pet-a-Vet/issues">Αναφορά Bug</a>
+    ·
+    <a href="https://github.com/IBibla/Pet-a-Vet/issues">Πρόταση Feature</a>
+  </p>
+</div>
 
 [![License](https://img.shields.io/badge/License-All%20Rights%20Reserved-red.svg)](LICENSE.md)
 [![Status](https://img.shields.io/badge/Status-Active%20Development-green.svg)](#)
 [![Platform](https://img.shields.io/badge/Platform-Web%20Application-blue.svg)](#)
 [![Framework](https://img.shields.io/badge/Framework-Next.js%2015-black.svg)](#)
 [![Database](https://img.shields.io/badge/Database-MySQL-orange.svg)](#)
-[![Testing](https://img.shields.io/badge/Testing-Jest%20%26%20RTL-red.svg)](#)
 
 ---
 
@@ -54,6 +72,8 @@
 - Ενισχύει την επικοινωνία μεταξύ κτηνιάτρων και ιδιοκτητών κατοικίδιων
 - Εξορθολογίζει τις επιχειρηματικές διαδικασίες και τη διαχείριση αποθέματος
 - Παρέχει data-driven insights για καλύτερη λήψη αποφάσεων
+
+<p align="right">(<a href="#readme-top">πίσω στην κορυφή</a>)</p>
 
 ---
 
@@ -143,13 +163,6 @@
 - ✅ Σύγχρονη, επαγγελματική διεπαφή
 - ✅ Loading states και error handling
 
-**Testing & Quality Assurance:**
-
-- ✅ Jest testing framework setup
-- ✅ React Testing Library integration
-- ✅ Δομή unit και integration tests
-- ✅ Code coverage reporting
-
 ### 🔄 **Υπό Ανάπτυξη**
 
 - 🔧 Βελτιωμένες αναφορές και analytics
@@ -162,6 +175,8 @@
 
 - 📅 Ενσωμάτωση ημερολογίου
 - 📊 Προηγμένο dashboard analytics
+
+<p align="right">(<a href="#readme-top">πίσω στην κορυφή</a>)</p>
 
 ---
 
@@ -239,12 +254,6 @@
 - **Nodemailer** - Email notifications
 - **Sonner** - Toast notifications
 
-**Testing:**
-
-- **Jest** - Testing framework
-- **React Testing Library** - Component testing
-- **JSDOM** - DOM testing environment
-
 **Development Tools:**
 
 - **ESLint** - Code linting
@@ -264,6 +273,8 @@
 │ • Radix UI      │    │ • Role Control  │    │ • Query Layer   │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
+
+<p align="right">(<a href="#readme-top">πίσω στην κορυφή</a>)</p>
 
 ---
 
@@ -294,39 +305,84 @@ Pet-a-Vet/
 │   │   │   └── ...                  # Επιπλέον dashboard sections
 │   │   ├── login/                   # Σελίδες authentication
 │   │   ├── register/                # Εγγραφή χρηστών
+│   │   ├── forgot-password/         # Password recovery
 │   │   ├── store/                   # E-commerce frontend
+│   │   ├── layout.tsx               # Root layout component
+│   │   ├── page.tsx                 # Homepage
 │   │   └── globals.css              # Global styles
 │   ├── components/                  # Επαναχρησιμοποιήσιμα React components
 │   │   ├── ui/                      # Base UI components (Shadcn/UI)
-│   │   ├── medical-record-form.tsx
-│   │   ├── pet-form.tsx
-│   │   ├── notifications.tsx
+│   │   ├── db-initializer.tsx       # Database initialization component
+│   │   ├── medical-record-form.tsx  # Medical records form
+│   │   ├── medical-record-view.tsx  # Medical records viewer
+│   │   ├── pet-form.tsx             # Pet registration form
+│   │   ├── notifications.tsx        # Notification system
+│   │   ├── theme-provider.tsx       # Theme context provider
+│   │   ├── theme-toggle.tsx         # Dark/light mode toggle
 │   │   └── ...                      # Feature-specific components
+│   ├── contexts/                    # React Context providers
+│   │   ├── auth-provider.tsx        # Authentication context
+│   │   ├── theme-context.tsx        # Theme management
+│   │   └── preferences-context.tsx  # User preferences
+│   ├── hooks/                       # Custom React hooks
+│   │   ├── use-debounce.ts          # Debouncing hook
+│   │   ├── use-mobile.tsx           # Mobile detection
+│   │   ├── use-performance.ts       # Performance monitoring
+│   │   └── use-toast.ts             # Toast notifications
 │   ├── lib/                         # Utility libraries και configurations
 │   │   ├── db/                      # Database layer
 │   │   │   ├── models/              # Data models και interfaces
 │   │   │   ├── connection.ts        # Database connection pool
 │   │   │   └── config.ts            # Database configuration
+│   │   ├── services/                # Business logic services
+│   │   ├── utils/                   # Utility functions
 │   │   ├── auth.ts                  # Authentication logic
 │   │   ├── auth-utils.ts            # Authorization utilities
+│   │   ├── api-auth.ts              # API authentication
+│   │   ├── role-access.ts           # Role-based access control
 │   │   └── utils.ts                 # General utilities
-│   ├── contexts/                    # React Context providers
-│   │   ├── auth-provider.tsx        # Authentication context
-│   │   ├── theme-context.tsx        # Theme management
-│   │   └── preferences-context.tsx
-│   ├── hooks/                       # Custom React hooks
+│   ├── public/                      # Static assets
+│   │   ├── Pet-a-vet-logo-transparent.png  # Main logo
+│   │   ├── *.png                    # Product και pet images
+│   │   └── placeholder.*            # Placeholder images
+│   ├── scripts/                     # Development και deployment scripts
+│   │   ├── database/                # Database management scripts
+│   │   ├── debug/                   # Debugging utilities
+│   │   └── README.md                # Scripts documentation
+│   ├── styles/                      # Additional styling
+│   │   └── globals.css              # Global CSS overrides
 │   ├── tests/                       # Testing infrastructure
 │   │   ├── unit/                    # Unit tests
 │   │   ├── integration/             # Integration tests
+│   │   ├── authentication/         # Auth-specific tests
+│   │   ├── e2e/                     # End-to-end tests
+│   │   ├── performance/             # Performance tests
+│   │   ├── security/                # Security tests
+│   │   ├── fixtures/                # Test data fixtures
+│   │   ├── helpers/                 # Test utilities
 │   │   ├── jest.config.js           # Jest configuration
-│   │   └── setup.ts                 # Test setup
+│   │   ├── setup.ts                 # Test setup
+│   │   └── README.md                # Testing documentation
+│   ├── utils/                       # Application utilities
 │   ├── middleware.ts                # Next.js middleware για auth
+│   ├── components.json              # Shadcn/UI configuration
+│   ├── next.config.mjs              # Next.js configuration
+│   ├── tailwind.config.ts           # Tailwind CSS configuration
+│   ├── tsconfig.json                # TypeScript configuration
+│   ├── playwright.config.ts         # Playwright E2E testing
+│   ├── postcss.config.mjs           # PostCSS configuration
 │   ├── package.json                 # Dependencies και scripts
-│   └── tsconfig.json                # TypeScript configuration
-├── Mockup Screens/                  # UI/UX design mockups
+│   ├── package-lock.json            # NPM lock file
+│   └── pnpm-lock.yaml              # PNPM lock file
 ├── Resources/                       # Οπτικά στοιχεία και διαγράμματα
-│   ├── Robustness Diagram/
-│   └── Sequence Diagram/
+│   ├── Final UI/                    # Τελικά UI screenshots
+│   ├── Mockup Screens/              # UI/UX design mockups
+│   ├── Robustness Diagram/          # Robustness diagrams
+│   ├── Sequence Diagram/            # Sequence diagrams
+│   ├── Domain-model-v*.png          # Domain model iterations
+│   ├── Use-casel-v*.png             # Use case diagrams
+│   ├── Pet-a-vet-logo*.png          # Logo variants
+│   └── tests.png                    # Testing documentation
 ├── LICENSE.md                       # Άδεια έργου
 ├── Pet-a-Vet.pdf                    # Κύρια PDF τεκμηρίωση
 ├── Pet-a-Vet.tex                    # Κύρια LaTeX τεκμηρίωση
@@ -373,10 +429,6 @@ Pet-a-Vet/
    DB_NAME=petavet
    DB_USER=your_username
    DB_PASSWORD=your_password
-
-   # Application Configuration
-   NEXTAUTH_URL=http://localhost:3000
-   NEXTAUTH_SECRET=your_secret_key
    ```
 
 4. **Ρύθμιση βάσης δεδομένων**:
@@ -464,6 +516,8 @@ npm run lint         # Εκτέλεση ESLint
 4. **Προβλήματα Authentication**:
    - Επαληθεύστε ότι το `NEXTAUTH_SECRET` είναι ορισμένο στο `.env.local` - Καθαρίστε τα browser cookies για το localhost
 
+<p align="right">(<a href="#readme-top">πίσω στην κορυφή</a>)</p>
+
 ---
 
 ## Τεκμηρίωση
@@ -534,7 +588,7 @@ npm run lint         # Εκτέλεση ESLint
 - [x] Υλοποίηση responsive design
 - [x] Ενσωμάτωση component library (Radix UI)
 - [x] Σύστημα θεμάτων (dark/light mode)
-- [x] Ρύθμιση testing framework (Jest + RTL)
+- [x] Ρύθμιση testing framework (Jest)
 - [x] Δομή testing API endpoints
 
 ### Φάση 5: Βελτίωση & Βελτιστοποίηση 🔄
@@ -562,6 +616,8 @@ npm run lint         # Εκτέλεση ESLint
 - [ ] Υλοποίηση CI/CD pipeline
 - [ ] Διαμόρφωση deployment για production
 - [ ] Συστήματα παρακολούθησης και logging
+
+<p align="right">(<a href="#readme-top">πίσω στην κορυφή</a>)</p>
 
 ---
 
@@ -593,10 +649,18 @@ npm run lint         # Εκτέλεση ESLint
 
 ### Ομάδα Ανάπτυξης
 
-**Ακαδημαϊκό Έτος**: 2024-2025
-**Μάθημα**: Εργαστήριο Τεχνολογίας Λογισμικού
-**Ίδρυμα**: Πανεπιστήμιο Πατρών
+**Ακαδημαϊκό Έτος**: 2024-2025  
+**Μάθημα**: Εργαστήριο Τεχνολογίας Λογισμικού  
+**Ίδρυμα**: Πανεπιστήμιο Πατρών  
 **Τμήμα**: Μηχανικών Η/Υ και Πληροφορικής
+
+### Κορυφαίοι Συνεισφέροντες
+
+<a href="https://github.com/IBibla/Pet-a-Vet/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=IBibla/Pet-a-Vet" alt="contrib.rocks image" />
+</a>
+
+<p align="right">(<a href="#readme-top">πίσω στην κορυφή</a>)</p>
 
 ---
 
@@ -605,6 +669,8 @@ npm run lint         # Εκτέλεση ESLint
 **Όλα τα Δικαιώματα Διατηρούνται** - Copyright © 2025 Pet-à-Vet Team
 
 Αυτό το λογισμικό και η σχετική τεκμηρίωση είναι ιδιόκτητα και αναπτύχθηκαν για εκπαιδευτικούς σκοπούς. Δείτε το [LICENSE.md](LICENSE.md) για λεπτομερείς όρους.
+
+<p align="right">(<a href="#readme-top">πίσω στην κορυφή</a>)</p>
 
 ---
 
@@ -615,6 +681,10 @@ npm run lint         # Εκτέλεση ESLint
 - **Ίδρυμα**: Πανεπιστήμιο Πατρών
 - **Τμήμα**: Μηχανικών Η/Υ και Πληροφορικής
 - **Μάθημα**: Εργαστήριο Τεχνολογίας Λογισμικού
+
+**Project Link**: [https://github.com/IBibla/Pet-a-Vet](https://github.com/IBibla/Pet-a-Vet)
+
+<p align="right">(<a href="#readme-top">πίσω στην κορυφή</a>)</p>
 
 ---
 
